@@ -1,0 +1,15 @@
+version: "3.8" # Versión de Docker Compose
+
+services:
+  hermes: # Nombre del servicio / contenedor
+    image: hermes # Nombre de la imagen del servicio
+    build:
+      context: . # Directorio donde se encuentra el Dockerfile
+      dockerfile: Dockerfile # Archivo Dockerfile para construir la imagen
+    command: uvicorn apirest:app --host 0.0.0.0 --port 80 # Comando para ejecutar la aplicación con Uvicorn
+    volumes:
+      - ../storage:/usr/src/app/storage # Mapea el directorio de almacenamiento del host al contenedor
+    ports:
+      - 8080:80 # Mapea el puerto 80 del contenedor al puerto 8080 del host
+    environment:
+      - MODEL_FOLDER=/usr/src/app/storage/models # Variable de entorno para la carpeta de modelos
